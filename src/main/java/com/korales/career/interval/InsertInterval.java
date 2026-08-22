@@ -1,4 +1,4 @@
-package com.korales.career;
+package com.korales.career.interval;
 
 import java.util.ArrayList;
 import java.util.Arrays;

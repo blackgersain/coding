@@ -1,4 +1,4 @@
-package com.korales.career;
+package com.korales.career.interval;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
