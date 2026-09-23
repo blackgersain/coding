@@ -12,6 +12,7 @@ public class TopologicalSort {
                 indegree[v]++;
             }
         }
+
         // enqueue nodes with indegree 0
         Queue<Integer> queue = new LinkedList<>();
         for (int u = 0; u < n; u++) {
