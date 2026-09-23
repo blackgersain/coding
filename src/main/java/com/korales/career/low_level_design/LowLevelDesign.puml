@@ -1,0 +1,372 @@
+@startmindmap
+<style>
+mindmapDiagram {
+    ' Global Canvas & Typography Settings
+    FontName "Segoe UI", "Inter", "Helvetica", sans-serif
+    FontSize 11
+    FontColor #1E293B
+    LineColor #94A3B8
+    LineThickness 1.5
+    BackgroundColor #FFFFFF
+
+    ' Base Node Fallback
+    node {
+        Padding 8 12
+        Margin 6 10
+        RoundCorner 8
+        MaximumWidth 220
+        BackgroundColor #FFFFFF
+        LineColor #E2E8F0
+        LineThickness 1
+        FontColor #334155
+    }
+
+    ' Level 0: Root Anchor Node
+    rootNode {
+        FontColor #FFFFFF
+        FontSize 16
+        FontStyle bold
+        BackgroundColor #0F172A
+        LineColor #0F172A
+        RoundCorner 10
+        Padding 14 20
+    }
+
+    ' Level 1: Primary Domains (Solid Cobalt)
+    :depth(1) {
+        FontColor #FFFFFF
+        FontSize 13
+        FontStyle bold
+        BackgroundColor #1E40AF
+        LineColor #1D4ED8
+        RoundCorner 8
+        Padding 10 16
+    }
+
+    ' Level 2: Core Sub-Systems (Solid Indigo)
+    :depth(2) {
+        FontColor #FFFFFF
+        FontSize 12
+        FontStyle bold
+        BackgroundColor #4338CA
+        LineColor #3730A3
+        RoundCorner 7
+        Padding 8 14
+    }
+
+    ' Level 3: Architectural Components (Solid Deep Teal)
+    :depth(3) {
+        FontColor #FFFFFF
+        FontSize 11
+        FontStyle bold
+        BackgroundColor #0D9488
+        LineColor #0F766E
+        RoundCorner 6
+        Padding 7 12
+    }
+
+    ' Level 4: Specific Patterns & Techniques (Light Cyan Card with Border)
+    :depth(4) {
+        FontColor #0369A1
+        FontSize 11
+        FontStyle bold
+        BackgroundColor #F0F9FF
+        LineColor #BAE6FD
+        LineThickness 1.5
+        RoundCorner 6
+        Padding 6 11
+    }
+
+    ' Level 5: Implementation Details & Parameters (Crisp Slate Card)
+    :depth(5) {
+        FontColor #334155
+        FontSize 10
+        FontStyle plain
+        BackgroundColor #F8FAFC
+        LineColor #CBD5E1
+        LineThickness 1
+        RoundCorner 6
+        Padding 5 10
+    }
+
+    ' Level 6+: Granular Code/Property Notes (Subtle Minimal Container)
+    :depth(6) {
+        FontColor #64748B
+        FontSize 10
+        FontStyle plain
+        BackgroundColor #FFFFFF
+        LineColor #E2E8F0
+        LineThickness 1
+        RoundCorner 4
+        Padding 4 8
+    }
+}
+</style>
+
+* System Design
+
+left side
+
+** Foundations
+*** Networking
+
+*** Api Design
+**** How To
+***** Pagination
+****** Offset Based
+****** Cursor Based
+
+***** Filtering And Sorting
+***** Idempotency Keys
+***** Consistent Error Responses
+***** Versioning Strategies
+****** Url Versioning
+****** Header Versioning
+
+***** Rate Limiting And Throttling
+****** Per User Limits
+****** Per IP Limits
+****** Endpoint Specific Limits
+
+**** Security Considerations
+***** Api Keys
+***** Jwt Tokens
+***** RBAC Role Based Access Control
+
+**** Technologies
+***** REST
+***** SSE Server Sent Events
+***** Websockets
+
+***** GraphQL
+
+***** RPC
+****** When To
+******* Performance Is Critical
+******* Type Safety Matters
+******* Service To Service Communication
+******* Streaming Is Needed
+
+*** Database Modeling
+*** Database Indexing
+
+** Scale
+*** Caching
+**** Strategies
+***** External
+***** CDN And Edge
+****** Latency from 200ms to 10ms
+****** Reduces Server Load Up to 90%
+****** Use For Shared Data
+
+***** Client Side
+***** In Process
+****** Internal Caching - Hot Keys
+****** Request Coalescing \nReduces millions to n Requests
+
+**** Architectures
+***** Cache Aside (Lazy)
+***** Write Through Caching
+***** Write Behind Caching
+***** Read Through Caching
+***** Tagged Invalidation
+***** Versioned Keys
+
+**** Eviction Policies
+***** LRU Least Recently Used
+***** LFU Least Frequently Used
+***** FIFO First In First Out
+***** TTL Time To Live
+
+**** Problems
+***** Stampede (Thundering Herd)
+****** Request Coalescing (Single Flight)
+****** Cache Warming
+****** Distributed Lock (Fragile)
+****** Probabilistic Refresh
+****** Background Refresh Process
+
+***** Consistency
+****** Invalidation On Writes
+****** Short TTLs For Stale Tolerance
+****** Accept Eventual Consistency
+
+***** Hot Keys
+****** Replicate Adding Random Suffix Key (Fanout)
+****** Add Local Fallback Cache
+****** Apply Rate Limiting
+
+**** How To
+***** 1. Identify Bottleneck
+***** 2. Decide What To Cache
+***** 3. Choose Your Cache Architecture
+***** 4. Set An Eviction Policy
+***** 5. Address The Downsides
+
+*** Sharding
+**** Partitioning
+***** Vertical
+***** Horizontal
+
+**** Sharding Key
+***** High Cardinality
+***** Even Distribution
+***** Aligns With Queries
+
+**** Strategies
+***** Range Based
+***** Hash Based
+***** Directory Based
+***** Geographic
+***** Functional
+
+**** Challenges
+***** Hot Spots And Load Imbalance
+****** Isolate Hot Keys To Dedicated Shards
+****** Use Compound Shar Keys
+****** Dynamic Shard Splitting
+
+***** Cross Shard Operations
+****** Cache The Results
+****** Denormalize To Keep Data Together
+****** Accept The Hit For Rare Queries
+
+***** Maintaining Consistency
+****** Design To Avoid Cross Shard Transactions
+****** Use sagas For Multiple Shard Operations
+****** Accept Eventual Consistency
+
+***** How To
+****** 1. Propose A Shard Key Based On Your Access Patterns
+****** 2. Choose Your Distribution Strategy
+****** 3. Call Out The Tradeoffs
+****** 4. Address How You'll Handle Growth
+
+*** Consistent Hashing
+**** Virtual Nodes
+**** Addressing Hot Spots
+***** Read Replicas
+***** key Space Salting
+***** Adaptative Rebalancing
+
+**** Real World
+***** Apache Cassandra
+***** Amazon's Dynamo DB
+***** CDNs
+
+**** When To
+***** Design A Distributed Database
+***** Design A Distributed Cache
+***** Design A Distributed Broker
+
+*** CAP theorem
+**** Consistency
+***** Levels
+****** Strong Consistency
+****** Casual Consistency
+****** Read Your Own Writes Consistency
+****** Eventual Consistency
+
+***** Examples
+****** Ticket Booking System
+****** E-commerce Inventory
+****** Financial Systems
+
+***** How To
+****** Distributed Transactions
+****** Single-Node Solutions
+****** Technologies
+******* PostgreSQL, MySQL
+******* Google Spanner
+******* DynamoDB (In Strong Consistency Mode)
+
+**** Availability
+***** Examples
+****** Social Media
+****** Content Platforms (like Netflix)
+****** Review Sites (like Yelp)
+
+***** How To
+****** Multiple Replicas
+****** CDC Change Data Capture
+****** Technologies
+******* Cassandra
+******* DynamoDB (In Multiple Availability Zone Configuration)
+******* Redis Clusters
+
+**** Partition Tolerance
+
+*** Numbers to Know
+**** Caching
+***** Key Metrics
+****** - ~1 millisecond latency \n - 100k+ operations/second \n - Memory-bound (up to 1TB)
+
+***** Scale Triggers
+****** - Hit rate < 80% \n - Latency > 1ms \n - Memory usage > 80% \n - Cache churn/thrashing
+
+**** Databases
+***** Key Metrics
+****** - Up to 50k transactions/second \n - Sub-5ms read latency (cached) \n - 64 TiB+ storage capacity
+
+***** Scale Triggers
+****** - Write throughput > 10k TPS \n - Read latency > 5ms uncached \n - Geographic distribution needs
+
+**** App Servers
+***** Key Metrics
+****** - 100k+ concurrent connections \n - 8-64 cores @ 2-4 GHz \n - 64-512GB RAM standard, up to 2TB
+
+***** Scale Triggers
+****** - CPU > 70% utilization \n - Response latency > SLA \n - Connections near 100k/instance \n - Memory > 80%
+
+**** Message Queues
+***** Key Metrics
+****** - Up to 1 million msgs/sec per broker \n - Sub-5ms end-to-end latency \n - Up to 50TB storage
+
+***** Scale Triggers
+****** - Throughput near 800k msgs/sec \n - Partition count ~200k per cluster \n - Growing consumer lag
+
+right side
+
+** Patterns
+*** Scaling Reads
+**** Optimize Within Your Database
+***** Indexing
+***** Hardware Upgrades
+****** Swapping HDD for SSD gives 10-100x faster random I/O
+
+***** Partitioning
+****** Horizontal
+****** Vertical
+
+***** Denormalization
+****** Trades Storage for Speed, Trades Writes for Reads
+
+***** Pre Compute Expensive Data
+****** Materialized Views
+
+**** Scale Database Horizontally
+***** Read Replicas
+****** Distribute Request Load
+****** Leader Follower
+******* Synchronous
+******* Asynchronous
+
+***** Database Sharding
+****** Distribute Dataset Size
+
+**** Add External Caching Layers
+**** Technologies
+***** PostgreSQL
+
+
+***** Redis
+
+*** Scaling Writes
+*** Realtime Updates
+*** Contention
+*** Multi Step Processes
+*** Large Blobs
+*** Long Running Tasks
+*** Proximity Based Search
+
+@endmindmap
