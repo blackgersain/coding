@@ -20,7 +20,9 @@ public class TopologicalSort {
                 queue.offer(u);
             }
         }
+
         List<Integer> order = new ArrayList<>();
+
         while (!queue.isEmpty()) {
             int u = queue.poll();
             order.add(u);
